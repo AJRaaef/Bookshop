@@ -5,8 +5,10 @@ import (
     "bookshop-backend/routes"
     "fmt"
     "net/http"
+    "os" // Required for os.Exit or handlers package (good practice)
 
     "github.com/gorilla/mux"
+    "github.com/gorilla/handlers" // <--- 1. IMPORT THIS PACKAGE
 )
 
 func main() {
@@ -18,24 +20,33 @@ func main() {
 
     // 3. Register all routes onto the single router instance
     routes.BookRoutes(r)
-    routes.BookIDRoutes(r) // Register the /api/book/{id} route
-	routes.Register_Customer_Routes(r)
-	routes.Login_Customer_Routes(r)
+    routes.BookIDRoutes(r)
+    routes.Register_Customer_Routes(r)
+    routes.Login_Customer_Routes(r)
+    routes.CartRoutes(r) // Cart APIs
+    routes.OrderRoutes(r) // Orders APIs
 
+    // --- 4. CORS Configuration and Middleware ---
+    // In a development environment, we use "*" to allow all origins.
+    // In production, change "*" to your actual frontend URL (e.g., "http://yourfrontend.com").
+    allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+    // Allow necessary methods for a full API
+    allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
+    // Allow headers like Content-Type and Authorization (for login/cart)
+    allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
 
-    // Cart APIs
-routes.CartRoutes(r)
+    // Wrap the Gorilla Mux router (r) with the CORS middleware
+    handler := handlers.CORS(allowedOrigins, allowedMethods, allowedHeaders)(r)
+    // ---------------------------------------------
 
-
-// Orders APIs
-routes.OrderRoutes(r)
-
-
-    // 4. Start the server
+    // 5. Start the server
     port := "8081"
     fmt.Printf("🚀 Server running at http://localhost:%s\n", port)
-    err := http.ListenAndServe(":"+port, r)
+    
+    // Pass the CORS-wrapped handler instead of the raw router 'r'
+    err := http.ListenAndServe(":"+port, handler) 
     if err != nil {
         fmt.Println("Server failed to start:", err)
+        os.Exit(1)
     }
 }

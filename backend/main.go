@@ -38,6 +38,7 @@ func main() {
     // 3. Register all routes onto the single router instance
     routes.BookRoutes(r)
     routes.BookIDRoutes(r)
+    routes.BookCategoryRoutes(r)
     routes.Register_Customer_Routes(r)
     routes.Login_Customer_Routes(r)
     routes.CartRoutes(r) // Cart APIs

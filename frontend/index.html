@@ -11,6 +11,7 @@
       --primary: #2c3e50;
       --secondary: #e67e22;
       --accent: #3498db;
+      --discount: #e74c3c;
       --light: #f9f9f9;
       --dark: #2c3e50;
       --text: #333;
@@ -227,6 +228,191 @@
       justify-content: center;
     }
     
+    /* Discounts Section */
+    .discounts-section {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      color: var(--white);
+      padding: 60px 0;
+      margin: 60px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .discounts-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .discounts-header h2 {
+      font-family: 'Merriweather', serif;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+    
+    .discounts-header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .discounts-carousel {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    
+    .discounts-track {
+      display: flex;
+      transition: transform 0.5s ease;
+      gap: 30px;
+    }
+    
+    .discount-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      transition: var(--transition);
+      color: var(--text);
+      min-width: 300px;
+      flex-shrink: 0;
+    }
+    
+    .discount-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+    
+    .discount-image-container {
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .discount-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .discount-badge {
+      background: var(--discount);
+      color: white;
+      padding: 8px 15px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-block;
+      border-radius: 0 0 8px 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    .discount-content {
+      padding: 25px;
+    }
+    
+    .discount-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    
+    .discount-category {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    
+    .discount-prices {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .original-price {
+      text-decoration: line-through;
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+    
+    .discounted-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--discount);
+    }
+    
+    .discount-percent {
+      background: var(--discount);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .discount-savings {
+      font-size: 0.9rem;
+      color: #27ae60;
+      font-weight: 500;
+    }
+    
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+    
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .carousel-dot.active {
+      background: var(--white);
+      transform: scale(1.2);
+    }
+    
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--discount);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: var(--transition);
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    .carousel-arrow:hover {
+      background: var(--white);
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .carousel-arrow.prev {
+      left: 20px;
+    }
+    
+    .carousel-arrow.next {
+      right: 20px;
+    }
+    
     /* Categories Section */
     .section-title {
       text-align: center;
@@ -316,6 +502,7 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
     
     .book-card:hover {
@@ -323,9 +510,23 @@
       box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     }
     
+    .book-discount-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--discount);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 2;
+    }
+    
     .book-image-container {
       height: 320px;
       overflow: hidden;
+      position: relative;
     }
     
     .book-image {
@@ -394,10 +595,27 @@
       margin-top: auto;
     }
     
-    .price {
+    .price-container {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .original-book-price {
+      text-decoration: line-through;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    .current-price {
       font-weight: 700;
       font-size: 1.3rem;
       color: var(--secondary);
+    }
+    
+    .discount-book-price {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--discount);
     }
     
     .add-to-cart {
@@ -639,6 +857,20 @@
       .books-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       }
+      
+      .carousel-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+      
+      .carousel-arrow.prev {
+        left: 10px;
+      }
+      
+      .carousel-arrow.next {
+        right: 10px;
+      }
     }
     
     @media (max-width: 768px) {
@@ -700,6 +932,10 @@
       .books-grid {
         grid-template-columns: 1fr;
       }
+      
+      .discount-card {
+        min-width: 280px;
+      }
     }
   </style>
 </head>
@@ -717,9 +953,9 @@
           <li><a href="#">Home</a></li>
           <li><a href="#">Books</a></li>
           <li><a href="#">Categories</a></li>
+          <li><a href="#">Discounts</a></li>
           <li><a href="#">Bestsellers</a></li>
           <li><a href="#">New Releases</a></li>
-          <li><a href="#">Deals</a></li>
         </ul>
       </nav>
       
@@ -752,7 +988,34 @@
       <p>Explore our curated collection of books across all genres. From bestsellers to hidden gems, find the perfect book for every reader.</p>
       <div class="hero-buttons">
         <a href="#" class="btn">Browse Books</a>
-        <a href="#" class="btn btn-outline">View Bestsellers</a>
+        <a href="#" class="btn btn-outline">View Discounts</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Discounts Section -->
+  <section class="discounts-section">
+    <div class="container">
+      <div class="discounts-header">
+        <h2>Special Discounts</h2>
+        <p>Limited time offers on our most popular books. Don't miss these amazing deals!</p>
+      </div>
+      
+      <div class="discounts-carousel">
+        <div class="carousel-arrow prev" id="prev-discount">
+          <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="carousel-arrow next" id="next-discount">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+        
+        <div id="discounts-track" class="discounts-track">
+          <!-- Discounts will be dynamically inserted here -->
+        </div>
+        
+        <div class="carousel-nav" id="discounts-dots">
+          <!-- Dots will be dynamically inserted here -->
+        </div>
       </div>
     </div>
   </section>
@@ -841,8 +1104,8 @@
             <li><a href="#">Home</a></li>
             <li><a href="#">Shop</a></li>
             <li><a href="#">Categories</a></li>
+            <li><a href="#">Discounts</a></li>
             <li><a href="#">Bestsellers</a></li>
-            <li><a href="#">New Releases</a></li>
           </ul>
         </div>
         
@@ -877,12 +1140,34 @@
     // API URLs
     const CATEGORIES_API_URL = 'http://localhost:8081/api/categories';
     const BOOKS_API_URL = 'http://localhost:8081/api/books';
+    const DISCOUNTS_API_URL = 'http://localhost:8081/api/discounts';
     const BASE_IMAGE_URL = 'http://localhost:8081';
 
     // DOM Elements
     const categoriesContainer = document.getElementById('categories-container');
     const booksContainer = document.getElementById('books-container');
+    const discountsTrack = document.getElementById('discounts-track');
+    const discountsDots = document.getElementById('discounts-dots');
     const statusMessage = document.getElementById('status-message');
+
+    // Global variables to store data
+    let allBooks = [];
+    let allDiscounts = [];
+    let currentDiscountSlide = 0;
+    let discountSlidesPerView = 3;
+
+    /**
+     * Calculate slides per view based on screen size
+     */
+    function calculateSlidesPerView() {
+      if (window.innerWidth < 768) {
+        return 1;
+      } else if (window.innerWidth < 992) {
+        return 2;
+      } else {
+        return 3;
+      }
+    }
 
     /**
      * Fetches all categories from the API
@@ -918,6 +1203,25 @@
             return booksData;
         } catch (error) {
             console.error('Failed to fetch books:', error);
+            return [];
+        }
+    }
+
+    /**
+     * Fetches all discounts from the API
+     */
+    async function fetchDiscounts() {
+        try {
+            const response = await fetch(DISCOUNTS_API_URL);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const discountsData = await response.json();
+            return discountsData;
+        } catch (error) {
+            console.error('Failed to fetch discounts:', error);
             return [];
         }
     }
@@ -964,9 +1268,127 @@
     }
 
     /**
+     * Renders discounts in the carousel
+     */
+    function renderDiscounts(discounts) {
+        if (!discounts || discounts.length === 0) {
+            discountsTrack.innerHTML = '<p class="status-message">No active discounts available at the moment.</p>';
+            return;
+        }
+
+        discountsTrack.innerHTML = '';
+        discountsDots.innerHTML = '';
+        
+        // Update slides per view
+        discountSlidesPerView = calculateSlidesPerView();
+        
+        discounts.forEach((discount, index) => {
+            // Create discount card
+            const discountCard = document.createElement('div');
+            discountCard.className = 'discount-card';
+            
+            // Get book image from allBooks
+            const book = allBooks.find(b => b.id === discount.book_id);
+            let discountImageUrl = 'https://via.placeholder.com/300x200/ecf0f1/2c3e50?text=Book+Image';
+            
+            if (book && book.image_url && book.image_url.trim() !== "") {
+                discountImageUrl = BASE_IMAGE_URL + book.image_url;
+            }
+            
+            // Calculate savings
+            const savings = discount.price - discount.discounted_price;
+            
+            discountCard.innerHTML = `
+                <div class="discount-image-container">
+                    <img class="discount-image" src="${discountImageUrl}" alt="${discount.title}">
+                    <div class="discount-badge">SPECIAL OFFER</div>
+                </div>
+                <div class="discount-content">
+                    <h3 class="discount-title">${discount.title}</h3>
+                    <div class="discount-category">${discount.category}</div>
+                    
+                    <div class="discount-prices">
+                        <span class="original-price">$${discount.price.toFixed(2)}</span>
+                        <span class="discounted-price">$${discount.discounted_price.toFixed(2)}</span>
+                        <span class="discount-percent">${discount.discount_percent}% OFF</span>
+                    </div>
+                    
+                    <div class="discount-savings">Save $${savings.toFixed(2)}</div>
+                    
+                    <button class="btn" style="margin-top: 15px; width: 100%;" onclick="addDiscountToCart(${discount.book_id})">
+                        Add to Cart
+                    </button>
+                </div>
+            `;
+            
+            discountsTrack.appendChild(discountCard);
+            
+            // Create dot for this slide
+            const dot = document.createElement('div');
+            dot.className = 'carousel-dot';
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToDiscountSlide(index));
+            discountsDots.appendChild(dot);
+        });
+        
+        updateDiscountCarousel();
+    }
+
+    /**
+     * Updates the carousel position
+     */
+    function updateDiscountCarousel() {
+        const trackWidth = discountsTrack.scrollWidth;
+        const cardWidth = trackWidth / allDiscounts.length;
+        const offset = -currentDiscountSlide * cardWidth * discountSlidesPerView;
+        discountsTrack.style.transform = `translateX(${offset}px)`;
+        
+        // Update active dot
+        const dots = discountsDots.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentDiscountSlide);
+        });
+    }
+
+    /**
+     * Goes to a specific slide
+     */
+    function goToDiscountSlide(slideIndex) {
+        const maxSlide = Math.max(0, allDiscounts.length - discountSlidesPerView);
+        currentDiscountSlide = Math.min(Math.max(0, slideIndex), maxSlide);
+        updateDiscountCarousel();
+    }
+
+    /**
+     * Goes to next slide
+     */
+    function nextDiscountSlide() {
+        const maxSlide = Math.max(0, allDiscounts.length - discountSlidesPerView);
+        if (currentDiscountSlide < maxSlide) {
+            currentDiscountSlide++;
+        } else {
+            currentDiscountSlide = 0;
+        }
+        updateDiscountCarousel();
+    }
+
+    /**
+     * Goes to previous slide
+     */
+    function prevDiscountSlide() {
+        const maxSlide = Math.max(0, allDiscounts.length - discountSlidesPerView);
+        if (currentDiscountSlide > 0) {
+            currentDiscountSlide--;
+        } else {
+            currentDiscountSlide = maxSlide;
+        }
+        updateDiscountCarousel();
+    }
+
+    /**
      * Renders books in the books section
      */
-    function renderBooks(books) {
+    function renderBooks(books, discounts) {
         if (!books || books.length === 0) {
             booksContainer.innerHTML = '<p class="status-message">No books found.</p>';
             return;
@@ -974,9 +1396,18 @@
 
         booksContainer.innerHTML = '';
         
+        // Create a map of book discounts for quick lookup
+        const discountMap = {};
+        discounts.forEach(discount => {
+            discountMap[discount.book_id] = discount;
+        });
+        
         books.forEach(book => {
             const bookCard = document.createElement('div');
             bookCard.className = 'book-card';
+            
+            // Check if book has a discount
+            const bookDiscount = discountMap[book.id];
             
             // Handle image URL
             let finalImageUrl;
@@ -996,6 +1427,8 @@
 
             // Construct the HTML content for a single book card
             bookCard.innerHTML = `
+                ${bookDiscount ? `<div class="book-discount-badge">${bookDiscount.discount_percent}% OFF</div>` : ''}
+                
                 <div class="book-image-container">
                     <img class="book-image" src="${finalImageUrl}" alt="${book.title}">
                 </div>
@@ -1017,8 +1450,14 @@
                     </div>
                     
                     <div class="book-price">
-                        <span class="price">$${book.price ? book.price.toFixed(2) : '0.00'}</span>
-                        <button class="add-to-cart">
+                        <div class="price-container">
+                            ${bookDiscount ? 
+                                `<span class="original-book-price">$${book.price.toFixed(2)}</span>
+                                 <span class="discount-book-price">$${bookDiscount.discounted_price.toFixed(2)}</span>` :
+                                `<span class="current-price">$${book.price.toFixed(2)}</span>`
+                            }
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart(${book.id}, ${!!bookDiscount})">
                             <i class="fas fa-shopping-cart"></i>
                         </button>
                     </div>
@@ -1063,18 +1502,24 @@
      */
     async function initializePage() {
         try {
-            // Fetch categories and books in parallel
-            const [categoriesData, booksData] = await Promise.all([
+            // Fetch categories, books, and discounts in parallel
+            const [categoriesData, booksData, discountsData] = await Promise.all([
                 fetchCategories(),
-                fetchBooks()
+                fetchBooks(),
+                fetchDiscounts()
             ]);
+            
+            // Store data globally
+            allBooks = booksData;
+            allDiscounts = discountsData;
             
             // Clear loading message
             statusMessage.textContent = '';
             
-            // Render categories and books
+            // Render categories, discounts, and books
             renderCategories(categoriesData);
-            renderBooks(booksData);
+            renderDiscounts(discountsData);
+            renderBooks(booksData, discountsData);
             
         } catch (error) {
             console.error('Error initializing page:', error);
@@ -1083,22 +1528,108 @@
         }
     }
 
+    // Cart functionality
+    let cartCount = 0;
+    const cartCountElement = document.querySelector('.cart-count');
+    
+    function addToCart(bookId, isDiscounted = false) {
+        cartCount++;
+        cartCountElement.textContent = cartCount;
+        
+        // Show notification
+        showNotification(isDiscounted ? 'Discounted book added to cart!' : 'Book added to cart!');
+    }
+    
+    function addDiscountToCart(bookId) {
+        cartCount++;
+        cartCountElement.textContent = cartCount;
+        
+        // Show notification
+        showNotification('Discounted book added to cart!');
+    }
+    
+    function showNotification(message) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            z-index: 1001;
+            transition: var(--transition);
+            transform: translateX(100%);
+        `;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 10);
+        
+        // Animate out and remove
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+
     // Mobile menu toggle
     document.getElementById('mobile-menu').addEventListener('click', function() {
       const nav = document.getElementById('main-nav');
       nav.classList.toggle('active');
     });
     
-    // Add to cart functionality
-    let cartCount = 0;
-    const cartCountElement = document.querySelector('.cart-count');
+    // Carousel navigation
+    document.getElementById('prev-discount').addEventListener('click', prevDiscountSlide);
+    document.getElementById('next-discount').addEventListener('click', nextDiscountSlide);
+    
+    // Swipe functionality for mobile
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+    
+    discountsTrack.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    });
+    
+    discountsTrack.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        currentX = e.touches[0].clientX;
+    });
+    
+    discountsTrack.addEventListener('touchend', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        const diff = startX - currentX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextDiscountSlide();
+            } else {
+                prevDiscountSlide();
+            }
+        }
+    });
+    
+    // Update carousel on resize
+    window.addEventListener('resize', () => {
+        discountSlidesPerView = calculateSlidesPerView();
+        updateDiscountCarousel();
+    });
     
     // Use event delegation for add-to-cart buttons
     document.addEventListener('click', function(e) {
       if (e.target.closest('.add-to-cart')) {
-        cartCount++;
-        cartCountElement.textContent = cartCount;
-        
         // Animation effect
         const button = e.target.closest('.add-to-cart');
         button.style.transform = 'scale(1.2)';

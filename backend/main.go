@@ -18,9 +18,12 @@ func main() {
     // 2. Create the main router instance
     r := mux.NewRouter()
 
+// Replace the entire block in main.go
+const absoluteImagesDir = "C:/Users/User/OneDrive/Desktop/bookshop-ecommerce/backend/images"
 
-    // Serve static files from backend/images folder
-r.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir("./backend/images"))))
+r.PathPrefix("/images/").Handler(
+    http.StripPrefix("/images/", http.FileServer(http.Dir(absoluteImagesDir))),
+)
 
 
     // 3. Register all routes onto the single router instance

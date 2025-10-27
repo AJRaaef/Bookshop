@@ -1,141 +1,925 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookshop Inventory</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f9;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-        #books-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .book-card {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            width: 250px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-        .book-card:hover {
-            transform: translateY(-5px);
-        }
-        .book-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 5px;
-        }
-        .book-author {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        .book-price {
-            font-size: 1.1em;
-            color: #28a745;
-            font-weight: bold;
-        }
-        .book-stock {
-            font-size: 0.9em;
-            color: #dc3545;
-            margin-top: 5px;
-        }
-        .book-image {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            /* Placeholder size if image_url is not set */
-            min-height: 250px; 
-            object-fit: cover;
-        }
-        /* Style for error/loading messages */
-        #status-message {
-            text-align: center;
-            color: #ffc107;
-            font-size: 1.2em;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Book Haven - Your Online Bookstore</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #e67e22;
+      --accent: #3498db;
+      --light: #f9f9f9;
+      --dark: #2c3e50;
+      --text: #333;
+      --text-light: #777;
+      --white: #fff;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--light);
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    ul {
+      list-style: none;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background: var(--secondary);
+      color: var(--white);
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    .btn:hover {
+      background: #d35400;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--secondary);
+      color: var(--secondary);
+    }
+    
+    .btn-outline:hover {
+      background: var(--secondary);
+      color: var(--white);
+    }
+    
+    /* Header Styles */
+    header {
+      background: var(--primary);
+      color: var(--white);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    
+    .logo i {
+      color: var(--secondary);
+    }
+    
+    nav ul {
+      display: flex;
+      gap: 25px;
+    }
+    
+    nav a {
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    nav a:hover {
+      color: var(--secondary);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: var(--transition);
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 5px;
+      padding: 8px 15px;
+    }
+    
+    .search-box input {
+      background: transparent;
+      border: none;
+      color: var(--white);
+      padding: 5px;
+      width: 200px;
+    }
+    
+    .search-box input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .search-box i {
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .cart-icon {
+      position: relative;
+    }
+    
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--secondary);
+      color: var(--white);
+      font-size: 0.7rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .mobile-menu {
+      display: none;
+      font-size: 1.5rem;
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1500&q=80') center/cover;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      text-align: center;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      padding: 0 20px;
+    }
+    
+    .hero h1 {
+      font-family: 'Merriweather', serif;
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    
+    /* Categories Section */
+    .section-title {
+      text-align: center;
+      margin: 60px 0 40px;
+      font-family: 'Merriweather', serif;
+      font-size: 2.2rem;
+      color: var(--dark);
+    }
+    
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-bottom: 60px;
+    }
+    
+    .category-card {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      text-align: center;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .category-img {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .category-content {
+      padding: 20px;
+    }
+    
+    .category-content h3 {
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+    
+    /* Books Section */
+    .books-section {
+      margin-bottom: 60px;
+    }
+    
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    
+    .book-card {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .book-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .book-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+    
+    .book-content {
+      padding: 20px;
+    }
+    
+    .book-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+      font-size: 1.1rem;
+      height: 2.6rem;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    
+    .book-author {
+      color: var(--text-light);
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+    
+    .book-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+    }
+    
+    .price {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--secondary);
+    }
+    
+    .add-to-cart {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .add-to-cart:hover {
+      background: var(--secondary);
+    }
+    
+    .book-stock {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 8px;
+    }
+    
+    .stock-low {
+      color: #e74c3c;
+      font-weight: 500;
+    }
+    
+    /* Status Message */
+    .status-message {
+      text-align: center;
+      padding: 20px;
+      font-size: 1.1rem;
+      margin: 20px 0;
+    }
+    
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--secondary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    /* Features Section */
+    .features {
+      display: flex;
+      justify-content: space-around;
+      padding: 60px 20px;
+      background: var(--white);
+      margin-bottom: 60px;
+    }
+    
+    .feature {
+      width: 30%;
+      text-align: center;
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--secondary);
+      margin-bottom: 20px;
+    }
+    
+    .feature h3 {
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+    
+    /* Newsletter */
+    .newsletter {
+      background: var(--primary);
+      color: var(--white);
+      padding: 60px 20px;
+      text-align: center;
+    }
+    
+    .newsletter h2 {
+      font-family: 'Merriweather', serif;
+      margin-bottom: 20px;
+    }
+    
+    .newsletter p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+    
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .newsletter-form input {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 5px 0 0 5px;
+    }
+    
+    .newsletter-form button {
+      background: var(--secondary);
+      color: var(--white);
+      border: none;
+      padding: 0 25px;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .newsletter-form button:hover {
+      background: #d35400;
+    }
+    
+    /* Footer */
+    footer {
+      background: #1a252f;
+      color: var(--white);
+      padding: 60px 0 30px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .footer-column h3 {
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--secondary);
+    }
+    
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-column a {
+      opacity: 0.8;
+      transition: var(--transition);
+    }
+    
+    .footer-column a:hover {
+      opacity: 1;
+      color: var(--secondary);
+      padding-left: 5px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+    
+    .social-links a:hover {
+      background: var(--secondary);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+      
+      .features {
+        flex-direction: column;
+        gap: 40px;
+      }
+      
+      .feature {
+        width: 100%;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .header-content {
+        flex-wrap: wrap;
+      }
+      
+      nav {
+        order: 3;
+        width: 100%;
+        margin-top: 15px;
+        display: none;
+      }
+      
+      nav.active {
+        display: block;
+      }
+      
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .mobile-menu {
+        display: block;
+      }
+      
+      .search-box {
+        width: 100%;
+        margin-top: 15px;
+        order: 2;
+      }
+      
+      .search-box input {
+        width: 100%;
+      }
+      
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .newsletter-form {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .newsletter-form input,
+      .newsletter-form button {
+        border-radius: 5px;
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-
-    <h1>📚 Our Bookshop Inventory</h1>
-    
-    <p id="status-message">Loading books...</p>
-
-    <div id="books-container">
+  <!-- Header -->
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <i class="fas fa-book-open"></i>
+        <span>The Book Haven</span>
+      </div>
+      
+      <nav id="main-nav">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Books</a></li>
+          <li><a href="#">Categories</a></li>
+          <li><a href="#">Bestsellers</a></li>
+          <li><a href="#">New Releases</a></li>
+          <li><a href="#">Deals</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search books...">
         </div>
+        
+        <div class="cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+        </div>
+        
+        <div class="user-account">
+          <i class="fas fa-user"></i>
+        </div>
+        
+        <div class="mobile-menu" id="mobile-menu">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </div>
+  </header>
 
-    <script>
-        // NOTE: The API port must match the port your Go server is running on (8081).
-        const API_URL = 'http://localhost:8081/api/books';
-        const booksContainer = document.getElementById('books-container');
-        const statusMessage = document.getElementById('status-message');
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Discover Your Next Great Read</h1>
+      <p>Explore our curated collection of books across all genres. From bestsellers to hidden gems, find the perfect book for every reader.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn">Browse Books</a>
+        <a href="#" class="btn btn-outline">View Bestsellers</a>
+      </div>
+    </div>
+  </section>
 
-        /**
-         * Fetches all books from the Go API and renders them on the page.
-         */
-        async function fetchAndDisplayBooks() {
-            try {
-                // 1. Fetch data from the API
-                const response = await fetch(API_URL);
+  <!-- Categories Section -->
+  <section class="container">
+    <h2 class="section-title">Browse by Category</h2>
+    <div class="categories">
+      <div class="category-card">
+        <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="category-content">
+          <h3>Fiction</h3>
+          <p>Explore imaginative stories and creative narratives</p>
+        </div>
+      </div>
+      
+      <div class="category-card">
+        <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="category-content">
+          <h3>Non-Fiction</h3>
+          <p>Real stories, facts, and educational content</p>
+        </div>
+      </div>
+      
+      <div class="category-card">
+        <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1629992101753-56d196c8aabb?auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="category-content">
+          <h3>Science Fiction</h3>
+          <p>Journey to other worlds and futures</p>
+        </div>
+      </div>
+      
+      <div class="category-card">
+        <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="category-content">
+          <h3>Mystery & Thriller</h3>
+          <p>Unravel puzzles and suspenseful stories</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Books Section -->
+  <section class="container books-section">
+    <h2 class="section-title">Our Book Collection</h2>
+    
+    <div id="status-message" class="status-message">
+      <div class="loading">
+        <div class="spinner"></div>
+        <span style="margin-left: 10px;">Loading books...</span>
+      </div>
+    </div>
+    
+    <div id="books-container" class="books-grid">
+      <!-- Books will be dynamically inserted here -->
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature">
+      <div class="feature-icon">
+        <i class="fas fa-shipping-fast"></i>
+      </div>
+      <h3>Free Shipping</h3>
+      <p>Free delivery on orders over $25. Fast and reliable shipping to your doorstep.</p>
+    </div>
+    
+    <div class="feature">
+      <div class="feature-icon">
+        <i class="fas fa-undo-alt"></i>
+      </div>
+      <h3>Easy Returns</h3>
+      <p>Not satisfied? Return your books within 30 days for a full refund.</p>
+    </div>
+    
+    <div class="feature">
+      <div class="feature-icon">
+        <i class="fas fa-lock"></i>
+      </div>
+      <h3>Secure Payment</h3>
+      <p>Your payment information is safe with our encrypted checkout process.</p>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <div class="container">
+      <h2>Join Our Book Club</h2>
+      <p>Subscribe to our newsletter and get the latest book recommendations, exclusive deals, and literary news delivered to your inbox.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Your email address">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>The Book Haven</h3>
+          <p>Your trusted online bookstore with a carefully curated selection of books for every reader.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">Bestsellers</a></li>
+            <li><a href="#">New Releases</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Customer Service</h3>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">My Account</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Contact Info</h3>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> 123 Book Street, City</li>
+            <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+            <li><i class="fas fa-envelope"></i> info@bookhaven.com</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2023 The Book Haven. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // NOTE: The API port must match the port your Go server is running on (8081).
+    const API_URL = 'http://localhost:8081/api/books';
+    
+    // CRITICAL: Base URL for static assets (your Go server address)
+    const BASE_IMAGE_URL = 'http://localhost:8081'; 
+
+    const booksContainer = document.getElementById('books-container');
+    const statusMessage = document.getElementById('status-message');
+
+    /**
+     * Fetches all books from the Go API and renders them on the page.
+     */
+    async function fetchAndDisplayBooks() {
+        try {
+            // 1. Fetch data from the API
+            const response = await fetch(API_URL);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const books = await response.json();
+
+            // 2. Clear the loading message
+            statusMessage.textContent = ''; 
+
+            if (books.length === 0) {
+                statusMessage.textContent = 'No books found in the inventory.';
+                return;
+            }
+
+            // 3. Iterate through the books and create HTML elements
+            books.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                // --- ABSOLUTE IMAGE URL FIX ---
+                let finalImageUrl;
+
+                if (book.image_url && book.image_url.trim() !== "") {
+                    // Concatenate the BASE_IMAGE_URL (http://localhost:8081) with 
+                    // the path from the DB (e.g., /static/go_book.jpg)
+                    finalImageUrl = BASE_IMAGE_URL + book.image_url;
+                } else {
+                    // Fallback to a placeholder if no image URL is provided
+                    finalImageUrl = 'https://via.placeholder.com/250x300?text=No+Image';
                 }
+                // --- END FIX ---
 
-                const books = await response.json();
+                // Determine stock status
+                const stockClass = book.stock < 5 ? 'stock-low' : '';
+                const stockText = book.stock < 5 ? `Only ${book.stock} left!` : `Stock: ${book.stock}`;
 
-                // 2. Clear the loading message
-                statusMessage.textContent = ''; 
-
-                if (books.length === 0) {
-                    statusMessage.textContent = 'No books found in the inventory.';
-                    return;
-                }
-
-                // 3. Iterate through the books and create HTML elements
-                books.forEach(book => {
-                    const bookCard = document.createElement('div');
-                    bookCard.className = 'book-card';
-                    
-                    // Use a placeholder image if image_url is empty or null
-                    const imageUrl = book.image_url && book.image_url.trim() !== "" ? book.image_url : 'https://via.placeholder.com/250x300?text=No+Image';
-
-                    // Construct the HTML content for a single book card
-                    bookCard.innerHTML = `
-                        <img class="book-image" src="${imageUrl}" alt="${book.title} cover">
+                // Construct the HTML content for a single book card
+                bookCard.innerHTML = `
+                    <img class="book-image" src="${finalImageUrl}" alt="${book.title} cover">
+                    <div class="book-content">
                         <div class="book-title">${book.title}</div>
                         <div class="book-author">by ${book.author}</div>
-                        <div class="book-price">$${book.price.toFixed(2)}</div>
-                        <div class="book-stock">Stock: ${book.stock}</div>
-                    `;
+                        <div class="book-price">
+                            <span class="price">$${book.price.toFixed(2)}</span>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                        <div class="book-stock ${stockClass}">${stockText}</div>
+                    </div>
+                `;
 
-                    booksContainer.appendChild(bookCard);
-                });
+                booksContainer.appendChild(bookCard);
+            });
 
-            } catch (error) {
-                console.error('Failed to fetch books:', error);
-                statusMessage.textContent = `Error loading books: ${error.message}. Please check if the Go API is running.`;
-                statusMessage.style.color = '#dc3545';
-            }
+        } catch (error) {
+            console.error('Failed to fetch books:', error);
+            statusMessage.textContent = `Error loading books: ${error.message}. Please check if the Go API is running.`;
+            statusMessage.style.color = '#dc3545';
         }
+    }
 
-        // Run the function when the page loads
-        fetchAndDisplayBooks();
-    </script>
+    // Mobile menu toggle
+    document.getElementById('mobile-menu').addEventListener('click', function() {
+      const nav = document.getElementById('main-nav');
+      nav.classList.toggle('active');
+    });
+    
+    // Add to cart functionality
+    let cartCount = 0;
+    const cartCountElement = document.querySelector('.cart-count');
+    
+    // Use event delegation for add-to-cart buttons
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.add-to-cart')) {
+        cartCount++;
+        cartCountElement.textContent = cartCount;
+        
+        // Animation effect
+        const button = e.target.closest('.add-to-cart');
+        button.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+          button.style.transform = 'scale(1)';
+        }, 200);
+      }
+    });
+
+    // Run the function when the page loads
+    fetchAndDisplayBooks();
+  </script>
 </body>
 </html>

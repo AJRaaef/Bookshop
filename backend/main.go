@@ -8,6 +8,7 @@ import (
     "os" // Required for os.Exit or handlers package (good practice)
 
     "github.com/gorilla/mux"
+ "path/filepath" // Import this package
     "github.com/gorilla/handlers" // <--- 1. IMPORT THIS PACKAGE
 )
 
@@ -18,7 +19,19 @@ func main() {
     // 2. Create the main router instance
     r := mux.NewRouter()
 
-r.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir("images"))))
+
+
+    // 1. Define the absolute path to your images folder.
+    // **CRITICAL:** Use your full path here with FORWARD SLASHES.
+    const absoluteImagesDir = "C:/Users/User/OneDrive/Desktop/bookshop-ecommerce/backend/images"
+
+    // 2. Set up the static file handler using the absolute path.
+    // Note: Use filepath.FromSlash to ensure Go handles the path correctly on Windows.
+    fsPath := http.Dir(filepath.FromSlash(absoluteImagesDir))
+    
+    r.PathPrefix("/images/").Handler(
+        http.StripPrefix("/images/", http.FileServer(fsPath)),
+    )
 
 
     // 3. Register all routes onto the single router instance

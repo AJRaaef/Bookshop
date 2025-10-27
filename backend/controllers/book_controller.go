@@ -8,7 +8,13 @@ import (
 )
 
 func GetBooks(w http.ResponseWriter, r *http.Request) {
-    rows, err := database.DB.Query("SELECT id, title, author, price, stock, description, image_url FROM books")
+    // Include all new columns in SELECT query
+    rows, err := database.DB.Query(`
+        SELECT 
+            id, title, author, price, stock, description, image_url, 
+            category, isbn, publisher, publish_year, rating, pages, language, created_at
+        FROM books
+    `)
     if err != nil {
         http.Error(w, "Database query error", http.StatusInternalServerError)
         return
@@ -18,7 +24,14 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
     var books []models.Book
     for rows.Next() {
         var b models.Book
-        rows.Scan(&b.ID, &b.Title, &b.Author, &b.Price, &b.Stock, &b.Description, &b.ImageURL)
+        err := rows.Scan(
+            &b.ID, &b.Title, &b.Author, &b.Price, &b.Stock, &b.Description, &b.ImageURL,
+            &b.Category, &b.ISBN, &b.Publisher, &b.PublishYear, &b.Rating, &b.Pages, &b.Language, &b.CreatedAt,
+        )
+        if err != nil {
+            http.Error(w, "Error scanning database row", http.StatusInternalServerError)
+            return
+        }
         books = append(books, b)
     }
 

@@ -43,6 +43,7 @@ func main() {
     routes.Login_Customer_Routes(r)
     routes.CartRoutes(r) // Cart APIs
     routes.OrderRoutes(r) // Orders APIs
+    routes.DiscountRoutes(r) // discount Routes
 
     // --- 4. CORS Configuration and Middleware ---
     // In a development environment, we use "*" to allow all origins.

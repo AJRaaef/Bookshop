@@ -20,17 +20,18 @@ func main() {
     r := mux.NewRouter()
 
 
-
-    // 1. Define the absolute path to your images folder.
-    // **CRITICAL:** Use your full path here with FORWARD SLASHES.
-    const absoluteImagesDir = "C:/Users/User/OneDrive/Desktop/bookshop-ecommerce/backend/images"
-
-    // 2. Set up the static file handler using the absolute path.
-    // Note: Use filepath.FromSlash to ensure Go handles the path correctly on Windows.
-    fsPath := http.Dir(filepath.FromSlash(absoluteImagesDir))
+// 1. Define the ABSOLUTE path to the folder containing your image.
+    // This MUST point directly to the static_assets folder.
+    const absoluteAssetsDir = "C:/Users/User/OneDrive/Desktop/bookshop-ecommerce/static_assets"
     
-    r.PathPrefix("/images/").Handler(
-        http.StripPrefix("/images/", http.FileServer(fsPath)),
+    // Convert path to http.Dir format
+    fsPath := http.Dir(filepath.FromSlash(absoluteAssetsDir))
+
+    // 2. Register the static file handler using a new prefix: /static/
+    // Request for: http://localhost:8081/static/go_book.jpg
+    // File found at: C:/.../static_assets/go_book.jpg
+    r.PathPrefix("/static/").Handler(
+        http.StripPrefix("/static/", http.FileServer(fsPath)),
     )
 
 

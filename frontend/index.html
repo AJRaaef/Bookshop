@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookshop Inventory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        #books-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .book-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+        .book-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        .book-author {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .book-price {
+            font-size: 1.1em;
+            color: #28a745;
+            font-weight: bold;
+        }
+        .book-stock {
+            font-size: 0.9em;
+            color: #dc3545;
+            margin-top: 5px;
+        }
+        .book-image {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            /* Placeholder size if image_url is not set */
+            min-height: 250px; 
+            object-fit: cover;
+        }
+        /* Style for error/loading messages */
+        #status-message {
+            text-align: center;
+            color: #ffc107;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Our Bookshop Inventory</h1>
+    
+    <p id="status-message">Loading books...</p>
+
+    <div id="books-container">
+        </div>
+
+    <script>
+        // NOTE: The API port must match the port your Go server is running on (8081).
+        const API_URL = 'http://localhost:8081/api/books';
+        const booksContainer = document.getElementById('books-container');
+        const statusMessage = document.getElementById('status-message');
+
+        /**
+         * Fetches all books from the Go API and renders them on the page.
+         */
+        async function fetchAndDisplayBooks() {
+            try {
+                // 1. Fetch data from the API
+                const response = await fetch(API_URL);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const books = await response.json();
+
+                // 2. Clear the loading message
+                statusMessage.textContent = ''; 
+
+                if (books.length === 0) {
+                    statusMessage.textContent = 'No books found in the inventory.';
+                    return;
+                }
+
+                // 3. Iterate through the books and create HTML elements
+                books.forEach(book => {
+                    const bookCard = document.createElement('div');
+                    bookCard.className = 'book-card';
+                    
+                    // Use a placeholder image if image_url is empty or null
+                    const imageUrl = book.image_url && book.image_url.trim() !== "" ? book.image_url : 'https://via.placeholder.com/250x300?text=No+Image';
+
+                    // Construct the HTML content for a single book card
+                    bookCard.innerHTML = `
+                        <img class="book-image" src="${imageUrl}" alt="${book.title} cover">
+                        <div class="book-title">${book.title}</div>
+                        <div class="book-author">by ${book.author}</div>
+                        <div class="book-price">$${book.price.toFixed(2)}</div>
+                        <div class="book-stock">Stock: ${book.stock}</div>
+                    `;
+
+                    booksContainer.appendChild(bookCard);
+                });
+
+            } catch (error) {
+                console.error('Failed to fetch books:', error);
+                statusMessage.textContent = `Error loading books: ${error.message}. Please check if the Go API is running.`;
+                statusMessage.style.color = '#dc3545';
+            }
+        }
+
+        // Run the function when the page loads
+        fetchAndDisplayBooks();
+    </script>
+</body>
+</html>

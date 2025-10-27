@@ -18,6 +18,11 @@ func main() {
     // 2. Create the main router instance
     r := mux.NewRouter()
 
+
+    // Serve static files from backend/images folder
+r.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir("./backend/images"))))
+
+
     // 3. Register all routes onto the single router instance
     routes.BookRoutes(r)
     routes.BookIDRoutes(r)

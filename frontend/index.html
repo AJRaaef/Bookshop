@@ -12,6 +12,7 @@
       --secondary: #e67e22;
       --accent: #3498db;
       --discount: #e74c3c;
+      --sale: #9b59b6;
       --light: #f9f9f9;
       --dark: #2c3e50;
       --text: #333;
@@ -226,6 +227,155 @@
       display: flex;
       gap: 15px;
       justify-content: center;
+    }
+    
+    /* Countdown Sales Section */
+    .countdown-sales-section {
+      background: linear-gradient(135deg, #8e44ad, #9b59b6);
+      color: var(--white);
+      padding: 60px 0;
+      margin: 60px 0;
+    }
+    
+    .countdown-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .countdown-header h2 {
+      font-family: 'Merriweather', serif;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+    
+    .countdown-header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+    
+    .countdown-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      transition: var(--transition);
+      color: var(--text);
+    }
+    
+    .countdown-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+    
+    .countdown-status {
+      padding: 10px 20px;
+      font-weight: 600;
+      text-align: center;
+    }
+    
+    .status-active {
+      background: #27ae60;
+      color: white;
+    }
+    
+    .status-upcoming {
+      background: #f39c12;
+      color: white;
+    }
+    
+    .status-ended {
+      background: #95a5a6;
+      color: white;
+    }
+    
+    .countdown-content {
+      padding: 25px;
+    }
+    
+    .countdown-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--sale);
+      text-align: center;
+    }
+    
+    .countdown-discount {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--sale);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .timer-unit {
+      text-align: center;
+      background: var(--sale);
+      color: white;
+      padding: 15px 10px;
+      border-radius: 8px;
+      min-width: 70px;
+    }
+    
+    .timer-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    
+    .timer-label {
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+    
+    .countdown-dates {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-top: 15px;
+    }
+    
+    .sale-button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: var(--sale);
+      color: white;
+      padding: 12px;
+      border-radius: 5px;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: var(--transition);
+    }
+    
+    .sale-button:hover {
+      background: #8e44ad;
+      transform: translateY(-2px);
+    }
+    
+    .sale-button.disabled {
+      background: #95a5a6;
+      cursor: not-allowed;
+    }
+    
+    .sale-button.disabled:hover {
+      transform: none;
     }
     
     /* Discounts Section */
@@ -659,6 +809,61 @@
       color: #f1c40f;
     }
     
+    /* Branches Section */
+    .branches-section {
+      background: var(--primary);
+      color: var(--white);
+      padding: 60px 0;
+      margin: 60px 0;
+    }
+    
+    .branches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .branch-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 30px;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+    
+    .branch-card:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-5px);
+    }
+    
+    .branch-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+    
+    .branch-code {
+      display: inline-block;
+      background: var(--secondary);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    
+    .branch-info {
+      margin-bottom: 15px;
+    }
+    
+    .branch-info i {
+      width: 20px;
+      color: var(--secondary);
+      margin-right: 10px;
+    }
+    
     /* Status Message */
     .status-message {
       text-align: center;
@@ -854,7 +1059,9 @@
       }
       
       .categories,
-      .books-grid {
+      .books-grid,
+      .countdown-grid,
+      .branches-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       }
       
@@ -929,12 +1136,28 @@
       }
       
       .categories,
-      .books-grid {
+      .books-grid,
+      .countdown-grid,
+      .branches-grid {
         grid-template-columns: 1fr;
       }
       
-      .discount-card {
+      .discount-card,
+      .countdown-card {
         min-width: 280px;
+      }
+      
+      .countdown-timer {
+        gap: 10px;
+      }
+      
+      .timer-unit {
+        min-width: 60px;
+        padding: 12px 8px;
+      }
+      
+      .timer-value {
+        font-size: 1.5rem;
       }
     }
   </style>
@@ -954,8 +1177,8 @@
           <li><a href="#">Books</a></li>
           <li><a href="#">Categories</a></li>
           <li><a href="#">Discounts</a></li>
-          <li><a href="#">Bestsellers</a></li>
-          <li><a href="#">New Releases</a></li>
+          <li><a href="#">Branches</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
       </nav>
       
@@ -988,7 +1211,21 @@
       <p>Explore our curated collection of books across all genres. From bestsellers to hidden gems, find the perfect book for every reader.</p>
       <div class="hero-buttons">
         <a href="#" class="btn">Browse Books</a>
-        <a href="#" class="btn btn-outline">View Discounts</a>
+        <a href="#" class="btn btn-outline">View Sales</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Countdown Sales Section -->
+  <section class="countdown-sales-section">
+    <div class="container">
+      <div class="countdown-header">
+        <h2>Flash Sales & Special Offers</h2>
+        <p>Limited time offers with countdown timers. Don't miss these amazing deals!</p>
+      </div>
+      
+      <div id="countdown-container" class="countdown-grid">
+        <!-- Countdown sales will be dynamically inserted here -->
       </div>
     </div>
   </section>
@@ -1041,6 +1278,16 @@
     
     <div id="books-container" class="books-grid">
       <!-- Books will be dynamically inserted here -->
+    </div>
+  </section>
+
+  <!-- Branches Section -->
+  <section class="branches-section">
+    <div class="container">
+      <h2 class="section-title" style="color: white;">Our Bookstore Branches</h2>
+      <div id="branches-container" class="branches-grid">
+        <!-- Branches will be dynamically inserted here -->
+      </div>
     </div>
   </section>
 
@@ -1105,7 +1352,7 @@
             <li><a href="#">Shop</a></li>
             <li><a href="#">Categories</a></li>
             <li><a href="#">Discounts</a></li>
-            <li><a href="#">Bestsellers</a></li>
+            <li><a href="#">Branches</a></li>
           </ul>
         </div>
         
@@ -1123,8 +1370,8 @@
         <div class="footer-column">
           <h3>Contact Info</h3>
           <ul>
-            <li><i class="fas fa-map-marker-alt"></i> 123 Book Street, City</li>
-            <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+            <li><i class="fas fa-map-marker-alt"></i> 123 Galle Road, Colombo</li>
+            <li><i class="fas fa-phone"></i> +94 11 234 5678</li>
             <li><i class="fas fa-envelope"></i> info@bookhaven.com</li>
           </ul>
         </div>
@@ -1141,6 +1388,8 @@
     const CATEGORIES_API_URL = 'http://localhost:8081/api/categories';
     const BOOKS_API_URL = 'http://localhost:8081/api/books';
     const DISCOUNTS_API_URL = 'http://localhost:8081/api/discounts';
+    const COUNTDOWN_SALES_API_URL = 'http://localhost:8081/countdown_sales';
+    const BRANCHES_API_URL = 'http://localhost:8081/branches';
     const BASE_IMAGE_URL = 'http://localhost:8081';
 
     // DOM Elements
@@ -1148,11 +1397,14 @@
     const booksContainer = document.getElementById('books-container');
     const discountsTrack = document.getElementById('discounts-track');
     const discountsDots = document.getElementById('discounts-dots');
+    const countdownContainer = document.getElementById('countdown-container');
+    const branchesContainer = document.getElementById('branches-container');
     const statusMessage = document.getElementById('status-message');
 
     // Global variables to store data
     let allBooks = [];
     let allDiscounts = [];
+    let allCountdownSales = [];
     let currentDiscountSlide = 0;
     let discountSlidesPerView = 3;
 
@@ -1227,6 +1479,44 @@
     }
 
     /**
+     * Fetches all countdown sales from the API
+     */
+    async function fetchCountdownSales() {
+        try {
+            const response = await fetch(COUNTDOWN_SALES_API_URL);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const salesData = await response.json();
+            return salesData;
+        } catch (error) {
+            console.error('Failed to fetch countdown sales:', error);
+            return [];
+        }
+    }
+
+    /**
+     * Fetches all branches from the API
+     */
+    async function fetchBranches() {
+        try {
+            const response = await fetch(BRANCHES_API_URL);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const branchesData = await response.json();
+            return branchesData;
+        } catch (error) {
+            console.error('Failed to fetch branches:', error);
+            return [];
+        }
+    }
+
+    /**
      * Renders categories in the categories section
      */
     function renderCategories(categories) {
@@ -1264,6 +1554,169 @@
             `;
             
             categoriesContainer.appendChild(categoryCard);
+        });
+    }
+
+    /**
+     * Renders countdown sales
+     */
+    function renderCountdownSales(sales) {
+        if (!sales || sales.length === 0) {
+            countdownContainer.innerHTML = '<p class="status-message">No active sales at the moment.</p>';
+            return;
+        }
+
+        countdownContainer.innerHTML = '';
+        
+        sales.forEach(sale => {
+            const saleCard = document.createElement('div');
+            saleCard.className = 'countdown-card';
+            saleCard.id = `sale-${sale.countdown_sale_id}`;
+            
+            const now = new Date();
+            const startTime = new Date(sale.start_time);
+            const endTime = new Date(sale.end_time);
+            
+            let status = 'ended';
+            let statusClass = 'status-ended';
+            let buttonClass = 'disabled';
+            
+            if (now < startTime) {
+                status = 'upcoming';
+                statusClass = 'status-upcoming';
+            } else if (now >= startTime && now <= endTime) {
+                status = 'active';
+                statusClass = 'status-active';
+                buttonClass = '';
+            }
+            
+            saleCard.innerHTML = `
+                <div class="countdown-status ${statusClass}">
+                    ${status.toUpperCase()} SALE
+                </div>
+                <div class="countdown-content">
+                    <h3 class="countdown-title">${sale.name}</h3>
+                    <div class="countdown-discount">${sale.discount_percentage}% OFF</div>
+                    
+                    <div class="countdown-timer" id="timer-${sale.countdown_sale_id}">
+                        <div class="timer-unit">
+                            <div class="timer-value" id="days-${sale.countdown_sale_id}">00</div>
+                            <div class="timer-label">DAYS</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-value" id="hours-${sale.countdown_sale_id}">00</div>
+                            <div class="timer-label">HOURS</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-value" id="minutes-${sale.countdown_sale_id}">00</div>
+                            <div class="timer-label">MINUTES</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-value" id="seconds-${sale.countdown_sale_id}">00</div>
+                            <div class="timer-label">SECONDS</div>
+                        </div>
+                    </div>
+                    
+                    <div class="countdown-dates">
+                        <div>Starts: ${formatDate(startTime)}</div>
+                        <div>Ends: ${formatDate(endTime)}</div>
+                    </div>
+                    
+                    <a href="#" class="sale-button ${buttonClass}">Shop Now</a>
+                </div>
+            `;
+            
+            countdownContainer.appendChild(saleCard);
+            
+            // Start the countdown timer
+            startCountdownTimer(sale.countdown_sale_id, startTime, endTime);
+        });
+    }
+
+    /**
+     * Starts countdown timer for a sale
+     */
+    function startCountdownTimer(saleId, startTime, endTime) {
+        function updateTimer() {
+            const now = new Date();
+            let targetTime = endTime;
+            
+            // If sale hasn't started yet, count down to start time
+            if (now < startTime) {
+                targetTime = startTime;
+            } else if (now > endTime) {
+                // Sale has ended
+                document.getElementById(`days-${saleId}`).textContent = '00';
+                document.getElementById(`hours-${saleId}`).textContent = '00';
+                document.getElementById(`minutes-${saleId}`).textContent = '00';
+                document.getElementById(`seconds-${saleId}`).textContent = '00';
+                return;
+            }
+            
+            const timeLeft = targetTime - now;
+            
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            document.getElementById(`days-${saleId}`).textContent = days.toString().padStart(2, '0');
+            document.getElementById(`hours-${saleId}`).textContent = hours.toString().padStart(2, '0');
+            document.getElementById(`minutes-${saleId}`).textContent = minutes.toString().padStart(2, '0');
+            document.getElementById(`seconds-${saleId}`).textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // Update immediately and then every second
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    }
+
+    /**
+     * Formats date for display
+     */
+    function formatDate(date) {
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    }
+
+    /**
+     * Renders branches
+     */
+    function renderBranches(branches) {
+        if (!branches || branches.length === 0) {
+            branchesContainer.innerHTML = '<p class="status-message">No branches found.</p>';
+            return;
+        }
+
+        branchesContainer.innerHTML = '';
+        
+        branches.forEach(branch => {
+            const branchCard = document.createElement('div');
+            branchCard.className = 'branch-card';
+            
+            branchCard.innerHTML = `
+                <h3 class="branch-name">${branch.name}</h3>
+                <div class="branch-code">${branch.branch_code}</div>
+                
+                <div class="branch-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>${branch.address}</span>
+                </div>
+                
+                <div class="branch-info">
+                    <i class="fas fa-phone"></i>
+                    <span>${branch.phone}</span>
+                </div>
+                
+                <button class="btn" style="margin-top: 15px; width: 100%;" onclick="viewBranchDetails(${branch.branch_id})">
+                    View Details
+                </button>
+            `;
+            
+            branchesContainer.appendChild(branchCard);
         });
     }
 
@@ -1502,24 +1955,29 @@
      */
     async function initializePage() {
         try {
-            // Fetch categories, books, and discounts in parallel
-            const [categoriesData, booksData, discountsData] = await Promise.all([
+            // Fetch all data in parallel
+            const [categoriesData, booksData, discountsData, salesData, branchesData] = await Promise.all([
                 fetchCategories(),
                 fetchBooks(),
-                fetchDiscounts()
+                fetchDiscounts(),
+                fetchCountdownSales(),
+                fetchBranches()
             ]);
             
             // Store data globally
             allBooks = booksData;
             allDiscounts = discountsData;
+            allCountdownSales = salesData;
             
             // Clear loading message
             statusMessage.textContent = '';
             
-            // Render categories, discounts, and books
+            // Render all sections
             renderCategories(categoriesData);
             renderDiscounts(discountsData);
             renderBooks(booksData, discountsData);
+            renderCountdownSales(salesData);
+            renderBranches(branchesData);
             
         } catch (error) {
             console.error('Error initializing page:', error);
@@ -1546,6 +2004,11 @@
         
         // Show notification
         showNotification('Discounted book added to cart!');
+    }
+    
+    function viewBranchDetails(branchId) {
+        showNotification('Opening branch details...');
+        // In a real app, this would navigate to branch details page
     }
     
     function showNotification(message) {
